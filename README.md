@@ -2,6 +2,15 @@
 
 ![Quotient Logo](./assets/quotient-wordmark.png)
 
+<p align="center">
+  <a href="https://app.quotientai.co" style="color: #CEC825;">App</a> •
+  <a href="https://docs.quotientai.co" style="color: #CEC825;">Docs</a> •
+  <a href="https://blog.quotientai.co" style="color: #CEC825;">Blog</a> •
+  <a href="https://discord.com/invite/YeJzANpntv" style="color: #CEC825;">Discord</a>
+</p>
+
+------
+
 This repository contains cookbooks and examples demonstrating how to monitor and evaluate AI systems for hallucinations, retrieval quality, and other reliability issues using [Quotient AI](https://www.quotientai.co/).
 
 ## What You Can Do

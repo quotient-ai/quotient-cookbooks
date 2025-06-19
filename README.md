@@ -25,10 +25,10 @@ Visit [app.quotientai.co](https://app.quotientai.co), sign up for a free account
 
 ## Cookbooks
 
-| Notebook | Description | Open |
-|----------|-------------|------|
-| [Tavily Quotient Detections](cookbooks/search/tavily/tavily-quotient-detections.ipynb) | This notebook demonstrates how to use Quotient to detect hallucinations and document relevancy in search results. | [Open Notebook](cookbooks/search/tavily/tavily-quotient-detections.ipynb) |
-| [Tavily Quotient Research Agent](cookbooks/agents/research/tavily-quotient-agent.ipynb) | This notebook demonstrates how to use Quotient to monitor and evaluate a research agent that browses the web and answers questions using the Tavily API. | [Open Notebook](cookbooks/agents/research/tavily-quotient-agent.ipynb) |
+| Notebook | Description | Open | Resources |
+|----------|-------------|------|-----------|
+| [Evaluate AI Search Quality](cookbooks/search/tavily/tavily-quotient-detections.ipynb) | This notebook demonstrates how to use Quotient to detect hallucinations and document relevancy in search results. | [Open Notebook](cookbooks/search/tavily/tavily-quotient-detections.ipynb) | [Tavily](https://github.com/tavily-ai), [Quotient](https://github.com/quotient-ai) |
+| [Build and Monitor a Web Research Agent](cookbooks/agents/research/tavily-quotient-agent.ipynb) | This notebook demonstrates how to use Quotient to monitor and evaluate a research agent that browses the web and answers questions using the Tavily API. | [Open Notebook](cookbooks/agents/research/tavily-quotient-agent.ipynb) | [Langchain](https://github.com/langchain-ai/langchain), [Tavily](https://github.com/tavily-ai), [OpenAI](https://github.com/OPENAI), [Quotient](https://github.com/quotient-ai) |
 
 ## Contributing
 This repository contains research and examples for AI reliability. Feel free to:

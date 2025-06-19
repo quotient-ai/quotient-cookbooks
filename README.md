@@ -34,4 +34,4 @@ This repository contains research and examples for AI reliability. Feel free to:
 - [Quotient Blog](https://blog.quotientai.co/)
 
 
-**You can reach the Quotient team at research@quotientai.co**"
+**You can reach the Quotient team at research@quotientai.co**

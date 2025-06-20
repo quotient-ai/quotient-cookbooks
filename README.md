@@ -1,12 +1,27 @@
-# `quotient-alpha`
-
-![Quotient Logo](./assets/quotient-wordmark.png)
+<p align="center">
+  <img src="./assets/quotient-wordmark.png" alt="Quotient Logo" width="300" />
+</p>
 
 <p align="center">
-  <a href="https://app.quotientai.co" style="color: #CEC825;">App</a> •
-  <a href="https://docs.quotientai.co" style="color: #CEC825;">Docs</a> •
-  <a href="https://blog.quotientai.co" style="color: #CEC825;">Blog</a> •
-  <a href="https://discord.com/invite/YeJzANpntv" style="color: #CEC825;">Discord</a>
+  <img src="./assets/QuotientDetections.png" alt="Quotient's Dashboard" width="700" />
+</p>
+
+<p align="center">
+  <img alt="License" src="https://img.shields.io/github/license/quotient-ai/quotient-alpha?style=flat-square&color=2D723C" />
+  <img alt="Last Commit" src="https://img.shields.io/github/last-commit/quotient-ai/quotient-alpha?style=flat-square&color=1D91F0" />
+  <img alt="Contributions welcome" src="https://img.shields.io/badge/Contributions-welcome-F7693C?style=flat-square" />
+  <img alt="Powered by Quotient" src="https://img.shields.io/badge/powered%20by-QuotientAI-CEC825?style=flat-square" />
+</p>
+
+<p align="center">
+  <a href="https://app.quotientai.co">App</a> •
+  <a href="https://docs.quotientai.co">Docs</a> •
+  <a href="https://blog.quotientai.co">Blog</a> •
+  <a href="https://discord.com/invite/YeJzANpntv">Discord</a>
+</p>
+
+<p align="center">
+  <em><a href="https://app.quotientai.co">Try Quotient Now (Free)</a></em>
 </p>
 
 ------

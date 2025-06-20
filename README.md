@@ -42,7 +42,8 @@ Visit [app.quotientai.co](https://app.quotientai.co), sign up for a free account
 
 | Notebook | Description | Open | Resources |
 |----------|-------------|------|-----------|
-| [Evaluate AI Search Quality](cookbooks/search/tavily/tavily-quotient-detections.ipynb) | This notebook demonstrates how to use Quotient to detect hallucinations and document relevancy in search results. | [Open Notebook](cookbooks/search/tavily/tavily-quotient-detections.ipynb) | [Tavily](https://github.com/tavily-ai), [Quotient](https://github.com/quotient-ai) |
+| [Evaluate AI Search Quality with Tavily](cookbooks/search/tavily/tavily-quotient-detections.ipynb) | This notebook demonstrates how to use Quotient to detect hallucinations and document relevancy in search results using Tavily. | [Open Notebook](cookbooks/search/tavily/tavily-quotient-detections.ipynb) | [Tavily](https://github.com/tavily-ai), [Quotient](https://github.com/quotient-ai) |
+| [Evaluate AI Search Quality with Exa](cookbooks/search/exa/exa-quotient-detections.ipynb) | This notebook demonstrates how to use Quotient to detect hallucinations and document relevancy in search results using Exa's `/answer` endpoint. | [Open Notebook](cookbooks/search/exa/exa-quotient-detections.ipynb) | [Exa](https://exa.ai), [Quotient](https://github.com/quotient-ai) |
 | [Build and Monitor a Web Research Agent](cookbooks/agents/research/tavily-quotient-agent.ipynb) | This notebook demonstrates how to use Quotient to monitor and evaluate a research agent that browses the web and answers questions using the Tavily API. | [Open Notebook](cookbooks/agents/research/tavily-quotient-agent.ipynb) | [Langchain](https://github.com/langchain-ai/langchain), [Tavily](https://github.com/tavily-ai), [OpenAI](https://github.com/OPENAI), [Quotient](https://github.com/quotient-ai) |
 
 ## Contributing

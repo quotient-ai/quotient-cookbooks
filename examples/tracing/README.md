@@ -28,10 +28,12 @@ pip install quotientai openai-agents openinference-instrumentation-openai-agents
 
 2. Setup your API Keys:
 
+Get your OpenAI API Key from https://platform.openai.com/
 ```
 export OPENAI_API_KEY=your_api_key
 ```
 
+Get your Quotient API Key from https://app.quotientai.co/ -> Click `Settings`
 ```
 export QUOTIENT_API_KEY=your_api_key
 ```

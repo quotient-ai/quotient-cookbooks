@@ -23,7 +23,7 @@ The flow is:
 1. Install the dependencies:
 
 ```
-pip install quotientai openai openinference-instrumentation-openai-agents
+pip install quotientai openai-agents openinference-instrumentation-openai-agents
 ```
 
 2. Setup your API Keys:

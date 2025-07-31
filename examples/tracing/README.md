@@ -54,6 +54,8 @@ Write up an analysis of Apple Inc.'s most recent quarter.
 
 ![Quotient Web UI](./openai_financial_research_agent/openai-multiagent-traces.png)
 
+6. You can view the Quotient Tracing setup here at this permalink: https://github.com/quotient-ai/quotient-cookbooks/blob/5cc3b2dd6abff3dd4d3495e0d1dd7001e7250a8d/examples/tracing/openai_financial_research_agent/manager.py#L19-#L47
+
 
 
 ### Starter prompt

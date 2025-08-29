@@ -57,7 +57,7 @@ The entire multi-agent workflow is automatically traced using Quotient. You can 
 3. The search results and context used
 4. The verification process and any corrections
 
-![Quotient Web UI](./openai_financial_research_agent/openai-multiagent-traces.png)
+![Quotient Web UI](openai-multiagent-traces.png)
 
 You can view the Quotient Tracing setup here at this permalink: https://github.com/quotient-ai/quotient-cookbooks/blob/5cc3b2dd6abff3dd4d3495e0d1dd7001e7250a8d/examples/tracing/openai_financial_research_agent/manager.py#L19-#L47
 

@@ -14,7 +14,7 @@ The system uses a hierarchical approach with specialized agents:
 4. **Writing**: A senior writer agent brings together the search snippets and any sub‑analyst summaries into a long‑form markdown report plus a short executive summary.
 5. **Verification**: A final verifier agent audits the report for obvious inconsistencies or missing sourcing.
 
-![Agent Architecture](./openai_financial_research_agent/agent-arch.png)
+![Agent Architecture](agent-arch.png)
 
 ## Quickstart
 

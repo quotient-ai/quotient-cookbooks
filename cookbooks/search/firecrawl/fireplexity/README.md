@@ -18,7 +18,6 @@ AI search engine with web, news, and images, enhanced with Quotient monitoring f
 ## Setup
 
 ```bash
-git clone https://github.com/mendableai/fireplexity.git
 cd fireplexity
 npm install
 ```

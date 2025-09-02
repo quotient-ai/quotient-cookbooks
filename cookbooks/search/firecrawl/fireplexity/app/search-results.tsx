@@ -5,6 +5,7 @@ import { Card } from '@/components/ui/card'
 import { SearchResult } from './types'
 import Image from 'next/image'
 import { CharacterCounter } from './character-counter'
+import { isValidImageUrl } from '@/lib/image-utils'
 
 interface SearchResultsProps {
   results: SearchResult[]
@@ -52,13 +53,14 @@ export function SearchResults({ results, isLoading }: SearchResultsProps) {
         >
           <Card className="h-full p-4 bg-white dark:bg-zinc-800 border-gray-200 dark:border-gray-700 hover:border-orange-400 dark:hover:border-orange-500 transition-all duration-200 hover:shadow-lg hover:-translate-y-1">
             {/* Image/Thumbnail */}
-            {result.image && (
+            {result.image && isValidImageUrl(result.image) && (
               <div className="relative h-32 mb-3 rounded-lg overflow-hidden bg-gray-100 dark:bg-zinc-700">
                 <Image
                   src={result.image}
                   alt={result.title}
                   fill
                   className="object-cover"
+                  unoptimized
                   onError={(e) => {
                     const target = e.target as HTMLImageElement
                     target.style.display = 'none'
@@ -69,21 +71,23 @@ export function SearchResults({ results, isLoading }: SearchResultsProps) {
             
             {/* Site info */}
             <div className="flex items-center gap-2 mb-2">
-              {result.favicon && (
+              {result.favicon && isValidImageUrl(result.favicon) ? (
                 <Image
                   src={result.favicon}
                   alt=""
                   width={16}
                   height={16}
                   className="rounded"
+                  unoptimized
                   onError={(e) => {
                     const target = e.target as HTMLImageElement
                     target.style.display = 'none'
                   }}
                 />
+              ) : (
+                <Globe className="h-4 w-4 text-gray-400" />
               )}
-              <span className="text-xs text-gray-500 dark:text-gray-400 flex items-center gap-1">
-                <Globe className="h-3 w-3" />
+              <span className="text-xs text-gray-500 dark:text-gray-400">
                 {result.siteName || new URL(result.url).hostname}
               </span>
             </div>

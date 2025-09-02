@@ -1,0 +1,7 @@
+{
+    "mcpServers": {
+      "quotient-mcp-server": {
+        "url": "https://mcp.quotientai.co/mcp/"
+      }
+  }
+}  

@@ -1,0 +1,27 @@
+---
+alwaysApply: true
+---
+# Evaluate Tool Calls Rule
+
+## Critical Rule
+
+- Always use the `evaluate_tool_call` function after any agent tool call to evaluate proper usage of the tool
+- Use this function to validate that tools are being called correctly with proper parameters
+- Apply this evaluation when assessing agent performance or troubleshooting tool usage issues
+
+## When to Apply
+
+- After Any Tool Call
+- When reviewing agent conversations that involve tool calls
+- When validating that an AI agent correctly used available tools
+- When checking if tool parameters were set correctly
+- When assessing overall agent tool calling performance
+
+## Example Usage
+
+<example>
+When evaluating if an agent correctly used tools, always call:
+evaluate_tool_call(available_tools, message_history)
+
+This ensures proper validation of tool usage patterns and parameter correctness.
+</example>

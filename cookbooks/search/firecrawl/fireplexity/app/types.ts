@@ -10,3 +10,20 @@ export interface SearchResult {
   favicon?: string
   siteName?: string
 }
+
+export interface NewsResult {
+  url: string
+  title: string
+  description?: string
+  publishedDate?: string
+  date?: string  // Added for compatibility with the API schema
+  source?: string
+  image?: string
+}
+
+export interface ImageResult {
+  url: string
+  title: string
+  thumbnail?: string
+  source?: string
+}

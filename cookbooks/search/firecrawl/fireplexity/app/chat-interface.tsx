@@ -5,22 +5,37 @@ import { Send, Loader2, User, Sparkles, FileText, Plus, Copy, RefreshCw, Check }
 import { useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { Textarea } from '@/components/ui/textarea'
-import { SearchResult } from './types'
-import { type Message } from 'ai'
+import { SearchResult, NewsResult, ImageResult } from './types'
+import { type UIMessage } from 'ai'
 import { CharacterCounter } from './character-counter'
 import Image from 'next/image'
 import { MarkdownRenderer } from './markdown-renderer'
 import { StockChart } from './stock-chart'
+import { NewsResults } from './news-results'
+import { ImageResults } from './image-results'
 
 interface MessageData {
   sources: SearchResult[]
+  newsResults?: NewsResult[]
+  imageResults?: ImageResult[]
   followUpQuestions: string[]
   ticker?: string
 }
 
+// Helper function to extract text content from UIMessage
+function getMessageContent(message: UIMessage): string {
+  if (!message.parts) return ''
+  return message.parts
+    .filter((part: any) => part.type === 'text')
+    .map((part: any) => part.text)
+    .join('')
+}
+
 interface ChatInterfaceProps {
-  messages: Message[]
+  messages: UIMessage[]
   sources: SearchResult[]
+  newsResults: NewsResult[]
+  imageResults: ImageResult[]
   followUpQuestions: string[]
   searchStatus: string
   isLoading: boolean
@@ -31,7 +46,7 @@ interface ChatInterfaceProps {
   currentTicker?: string | null
 }
 
-export function ChatInterface({ messages, sources, followUpQuestions, searchStatus, isLoading, input, handleInputChange, handleSubmit, messageData, currentTicker }: ChatInterfaceProps) {
+export function ChatInterface({ messages, sources, newsResults, imageResults, followUpQuestions, searchStatus, isLoading, input, handleInputChange, handleSubmit, messageData, currentTicker }: ChatInterfaceProps) {
   const messagesEndRef = useRef<HTMLDivElement>(null)
   const formRef = useRef<HTMLFormElement>(null)
   const [copiedMessageId, setCopiedMessageId] = useState<string | null>(null)
@@ -49,11 +64,11 @@ export function ChatInterface({ messages, sources, followUpQuestions, searchStat
     
     if (lastMessage.role === 'user') {
       // Waiting for response to this user message
-      query = lastMessage.content
+      query = getMessageContent(lastMessage)
       isWaitingForResponse = true
     } else if (secondLastMessage?.role === 'user' && lastMessage.role === 'assistant') {
       // Current conversation pair
-      query = secondLastMessage.content
+      query = getMessageContent(secondLastMessage)
       isWaitingForResponse = false
     }
   }
@@ -110,7 +125,7 @@ export function ChatInterface({ messages, sources, followUpQuestions, searchStat
     // Get the last user message and resubmit it
     const lastUserMessage = [...messages].reverse().find(m => m.role === 'user')
     if (lastUserMessage) {
-      handleInputChange({ target: { value: lastUserMessage.content } } as React.ChangeEvent<HTMLTextAreaElement>)
+      handleInputChange({ target: { value: getMessageContent(lastUserMessage) } } as React.ChangeEvent<HTMLTextAreaElement>)
       // Submit the form
       setTimeout(() => {
         formRef.current?.requestSubmit()
@@ -120,29 +135,29 @@ export function ChatInterface({ messages, sources, followUpQuestions, searchStat
 
 
   return (
-    <div className="flex flex-col h-full relative" style={{ height: 'calc(100vh - 80px)' }}>
-      {/* Top gradient overlay */}
-      <div className="absolute top-0 left-0 right-0 h-12 bg-gradient-to-b from-white to-transparent dark:from-zinc-900 dark:to-transparent pointer-events-none z-10" />
-      
-      
+    <div className="flex h-full relative" style={{ height: 'calc(100vh - 80px)' }}>
       {/* Main content area */}
-      <div 
-        ref={scrollContainerRef}
-        className="flex-1 overflow-y-auto pb-24 pt-8 scroll-smooth relative scrollbar-hide" 
-        style={{ 
-          scrollBehavior: 'smooth', 
-          overscrollBehavior: 'contain', 
-          WebkitOverflowScrolling: 'touch',
-          isolation: 'isolate'
-        }}
-      >
-        <div className="max-w-4xl mx-auto space-y-6 pb-8">
+      <div className="flex-1 flex flex-col relative">
+        {/* Top gradient overlay - removed */}
+        
+        {/* Scrollable content */}
+        <div 
+          ref={scrollContainerRef}
+          className="flex-1 overflow-y-auto pb-36 sm:pb-32 pt-8 scroll-smooth relative scrollbar-hide" 
+          style={{ 
+            scrollBehavior: 'smooth', 
+            overscrollBehavior: 'contain', 
+            WebkitOverflowScrolling: 'touch',
+            isolation: 'isolate'
+          } as React.CSSProperties}
+        >
+          <div className="max-w-4xl mx-auto space-y-6 pb-8">
           {/* Previous conversations */}
           {messages.length > 2 && (
             <>
               {/* Group messages in pairs (user + assistant) */}
               {(() => {
-                const pairs: Array<{user: Message, assistant?: Message}> = []
+                const pairs: Array<{user: UIMessage, assistant?: UIMessage}> = []
                 for (let i = 0; i < messages.length - 2; i += 2) {
                   pairs.push({
                     user: messages[i],
@@ -162,18 +177,18 @@ export function ChatInterface({ messages, sources, followUpQuestions, searchStat
                     {/* User message */}
                     {pair.user && (
                       <div>
-                        <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">{pair.user.content}</h2>
+                        <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">{getMessageContent(pair.user)}</h2>
                       </div>
                     )}
                     {pair.assistant && (
                       <>
                         {/* Sources - Show for each assistant response */}
                         {messageSources.length > 0 && (
-                          <div className="opacity-0 animate-fade-up [animation-duration:500ms] [animation-delay:200ms] [animation-fill-mode:forwards]">
+                          <div>
                             <div className="flex items-center justify-between mb-3">
                               <div className="flex items-center gap-2">
-                                <FileText className="h-4 w-4 text-yellow-500" />
-                                <h2 className="text-sm font-medium text-gray-600 dark:text-gray-400">Sources</h2>
+                                <FileText className="h-4 w-4 text-black dark:text-white" />
+                                <h2 className="text-sm font-medium text-gray-700 dark:text-gray-300">Sources</h2>
                               </div>
                               {messageSources.length > 5 && (
                                 <div className="flex items-center gap-1">
@@ -211,12 +226,7 @@ export function ChatInterface({ messages, sources, followUpQuestions, searchStat
                                   href={result.url}
                                   target="_blank"
                                   rel="noopener noreferrer"
-                                  className="group relative overflow-hidden rounded-lg border border-gray-200 dark:border-gray-700 hover:border-orange-300 dark:hover:border-orange-600 transition-all duration-200 hover:shadow-md opacity-0 animate-fade-up h-28"
-                                  style={{
-                                    animationDelay: `${300 + idx * 30}ms`,
-                                    animationDuration: '400ms',
-                                    animationFillMode: 'forwards'
-                                  }}
+                                  className="group relative overflow-hidden rounded-lg border border-gray-200 dark:border-gray-700 hover:border-orange-300 dark:hover:border-orange-600 hover:shadow-md h-28"
                                 >
                                   {/* Background image */}
                                   {result.image && (
@@ -235,14 +245,14 @@ export function ChatInterface({ messages, sources, followUpQuestions, searchStat
                                     </div>
                                   )}
                                   
-                                  {/* Gradient overlay - lighter for visibility */}
-                                  <div className="absolute inset-0 bg-gradient-to-t from-white/90 via-white/70 to-white/50 dark:from-zinc-800/90 dark:via-zinc-800/70 dark:to-zinc-800/50" />
+                                  {/* Semi-transparent overlay for text visibility */}
+                                  <div className="absolute inset-0 bg-white/90 dark:bg-zinc-800/90" />
                                   
                                   {/* Content */}
                                   <div className="relative p-3 flex flex-col justify-between h-full">
                                     {/* Favicon and domain */}
                                     <div className="flex items-center gap-1.5">
-                                      <div className="flex-shrink-0 w-4 h-4 bg-white/80 dark:bg-zinc-700/80 rounded flex items-center justify-center overflow-hidden">
+                                      <div className="flex-shrink-0 w-4 h-4 bg-white dark:bg-zinc-700 rounded flex items-center justify-center overflow-hidden">
                                         {result.favicon ? (
                                           <Image
                                             src={result.favicon}
@@ -267,7 +277,7 @@ export function ChatInterface({ messages, sources, followUpQuestions, searchStat
                                     </div>
                                     
                                     {/* Title */}
-                                    <h3 className="font-medium text-xs text-gray-900 dark:text-white line-clamp-2 group-hover:text-orange-600 dark:group-hover:text-orange-400 transition-colors leading-tight">
+                                    <h3 className="font-medium text-xs text-gray-900 dark:text-white line-clamp-2 group-hover:text-orange-600 dark:group-hover:text-orange-400 leading-tight">
                                       {result.title}
                                     </h3>
                                     
@@ -297,12 +307,12 @@ export function ChatInterface({ messages, sources, followUpQuestions, searchStat
                         <div>
                           <div className="flex items-center justify-between mb-3">
                             <div className="flex items-center gap-2">
-                              <Sparkles className="h-4 w-4 text-orange-500" />
-                              <h2 className="text-sm font-medium text-gray-600 dark:text-gray-400">Answer</h2>
+                              <Sparkles className="h-4 w-4 text-black dark:text-white" />
+                              <h2 className="text-sm font-medium text-gray-700 dark:text-gray-300">Answer</h2>
                             </div>
                             <div className="flex items-center gap-1">
                               <button
-                                onClick={() => handleCopy(pair.assistant?.content || '', `message-${pairIndex}`)}
+                                onClick={() => handleCopy(pair.assistant ? getMessageContent(pair.assistant) : '', `message-${pairIndex}`)}
                                 className="p-1.5 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 rounded-lg hover:bg-gray-100 dark:hover:bg-zinc-800 transition-colors"
                                 title={copiedMessageId === `message-${pairIndex}` ? "Copied!" : "Copy response"}
                               >
@@ -314,9 +324,9 @@ export function ChatInterface({ messages, sources, followUpQuestions, searchStat
                               </button>
                             </div>
                           </div>
-                          <div className="prose prose-gray max-w-none dark:prose-invert">
+                          <div className="prose prose-gray max-w-none dark:prose-invert prose-sm sm:prose-base break-words overflow-hidden">
                             <MarkdownRenderer 
-                              content={pair.assistant?.content || ''}
+                              content={pair.assistant ? getMessageContent(pair.assistant) : ''}
                               sources={messageSources}
                             />
                           </div>
@@ -324,26 +334,21 @@ export function ChatInterface({ messages, sources, followUpQuestions, searchStat
                         
                         {/* Related Questions - Show after each assistant response */}
                         {messageFollowUpQuestions.length > 0 && (
-                          <div className="opacity-0 animate-fade-up [animation-duration:300ms] [animation-fill-mode:forwards] mt-6">
+                          <div className="mt-6">
                             <div className="flex items-center gap-2 mb-3">
-                              <Sparkles className="h-4 w-4 text-red-500" />
-                              <h2 className="text-sm font-medium text-gray-600 dark:text-gray-400">Related</h2>
+                              <Sparkles className="h-4 w-4 text-black dark:text-white" />
+                              <h2 className="text-sm font-medium text-gray-700 dark:text-gray-300">Related</h2>
                             </div>
                             <div className="space-y-2">
                               {messageFollowUpQuestions.map((question, qIndex) => (
                                 <button
                                   key={qIndex}
                                   onClick={() => handleFollowUpClick(question)}
-                                  className="w-full text-left p-2 bg-white dark:bg-zinc-800 rounded-xl border border-gray-200 dark:border-gray-700 hover:border-orange-300 dark:hover:border-orange-600 transition-all duration-200 hover:shadow-md group opacity-0 animate-fade-up"
-                                  style={{
-                                    animationDelay: `${qIndex * 50}ms`,
-                                    animationDuration: '300ms',
-                                    animationFillMode: 'forwards'
-                                  }}
+                                  className="w-full text-left p-2 bg-white dark:bg-zinc-800 rounded-xl border border-gray-200 dark:border-gray-700 hover:border-orange-300 dark:hover:border-orange-600 hover:shadow-md group"
                                 >
-                                  <div className="flex items-center gap-2">
-                                    <Plus className="h-4 w-4 text-gray-400 group-hover:text-orange-500 transition-colors flex-shrink-0" />
-                                    <span className="text-sm text-gray-700 dark:text-gray-300 group-hover:text-orange-600 dark:group-hover:text-orange-400 transition-colors">
+                                  <div className="flex items-start gap-2">
+                                    <Plus className="h-4 w-4 text-gray-400 group-hover:text-orange-500 flex-shrink-0 mt-0.5" />
+                                    <span className="text-sm text-gray-700 dark:text-gray-300 group-hover:text-orange-600 dark:group-hover:text-orange-400 break-words">
                                       {question}
                                     </span>
                                   </div>
@@ -378,14 +383,17 @@ export function ChatInterface({ messages, sources, followUpQuestions, searchStat
             </div>
           )}
 
-          {/* Sources - Animated in first */}
-          {sources.length > 0 && !isWaitingForResponse && (
-            <div className="opacity-0 animate-fade-up [animation-duration:500ms] [animation-delay:200ms] [animation-fill-mode:forwards]">
-              <div className="flex items-center justify-between mb-3">
-                <div className="flex items-center gap-2">
-                  <FileText className="h-4 w-4 text-yellow-500" />
-                  <h2 className="text-sm font-medium text-gray-600 dark:text-gray-400">Sources</h2>
-                </div>
+          {/* Sources, Images & News - Animated in first */}
+          {(sources.length > 0 || imageResults.length > 0 || newsResults.length > 0) && !isWaitingForResponse && (
+            <div className="opacity-0 animate-fade-up [animation-duration:500ms] [animation-delay:200ms] [animation-fill-mode:forwards] space-y-4">
+              {/* Sources Section */}
+              {sources.length > 0 && (
+                <div>
+                  <div className="flex items-center justify-between mb-3">
+                    <div className="flex items-center gap-2">
+                      <FileText className="h-4 w-4 text-black dark:text-white" />
+                      <h2 className="text-sm font-medium text-gray-700 dark:text-gray-300">Sources</h2>
+                    </div>
                 {sources.length > 5 && (
                   <div className="flex items-center gap-1">
                     <span className="text-xs text-gray-500 dark:text-gray-400 mr-1">+{sources.length - 5} more</span>
@@ -422,12 +430,7 @@ export function ChatInterface({ messages, sources, followUpQuestions, searchStat
                     href={result.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="group relative overflow-hidden rounded-lg border border-gray-200 dark:border-gray-700 hover:border-orange-300 dark:hover:border-orange-600 transition-all duration-200 hover:shadow-md opacity-0 animate-fade-up h-28"
-                    style={{
-                      animationDelay: `${300 + index * 30}ms`,
-                      animationDuration: '400ms',
-                      animationFillMode: 'forwards'
-                    }}
+                    className="group relative overflow-hidden rounded-lg border border-gray-200 dark:border-gray-700 hover:border-orange-300 dark:hover:border-orange-600 hover:shadow-md h-28"
                   >
                     {/* Background image */}
                     {result.image && (
@@ -446,14 +449,14 @@ export function ChatInterface({ messages, sources, followUpQuestions, searchStat
                       </div>
                     )}
                     
-                    {/* Gradient overlay - lighter for visibility */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-white/90 via-white/70 to-white/50 dark:from-zinc-800/90 dark:via-zinc-800/70 dark:to-zinc-800/50" />
+                    {/* Semi-transparent overlay for text visibility */}
+                    <div className="absolute inset-0 bg-white/90 dark:bg-zinc-800/90" />
                     
                     {/* Content */}
                     <div className="relative p-3 flex flex-col justify-between h-full">
                       {/* Favicon and domain */}
                       <div className="flex items-center gap-1.5">
-                        <div className="flex-shrink-0 w-4 h-4 bg-white/80 dark:bg-zinc-700/80 rounded flex items-center justify-center overflow-hidden">
+                        <div className="flex-shrink-0 w-4 h-4 bg-white dark:bg-zinc-700 rounded flex items-center justify-center overflow-hidden">
                           {result.favicon ? (
                             <Image
                               src={result.favicon}
@@ -478,7 +481,7 @@ export function ChatInterface({ messages, sources, followUpQuestions, searchStat
                       </div>
                       
                       {/* Title */}
-                      <h3 className="font-medium text-xs text-gray-900 dark:text-white line-clamp-2 group-hover:text-orange-600 dark:group-hover:text-orange-400 transition-colors leading-tight">
+                      <h3 className="font-medium text-xs text-gray-900 dark:text-white line-clamp-2 group-hover:text-orange-600 dark:group-hover:text-orange-400 leading-tight">
                         {result.title}
                       </h3>
                       
@@ -493,6 +496,22 @@ export function ChatInterface({ messages, sources, followUpQuestions, searchStat
                   </a>
                 ))}
               </div>
+                </div>
+              )}
+              
+              {/* Images Section - Grouped with Sources */}
+              {imageResults.length > 0 && (
+                <div className="lg:hidden">
+                  <ImageResults results={imageResults} isLoading={false} />
+                </div>
+              )}
+              
+              {/* News Section - Grouped with Sources and Images */}
+              {newsResults.length > 0 && (
+                <div className="lg:hidden">
+                  <NewsResults results={newsResults} isLoading={false} />
+                </div>
+              )}
             </div>
           )}
 
@@ -509,13 +528,13 @@ export function ChatInterface({ messages, sources, followUpQuestions, searchStat
             <div className="opacity-0 animate-fade-up [animation-duration:500ms] [animation-fill-mode:forwards]">
               <div className="flex items-center justify-between mb-3">
                 <div className="flex items-center gap-2">
-                  <Sparkles className="h-4 w-4 text-orange-500" />
-                  <h2 className="text-sm font-medium text-gray-600 dark:text-gray-400">Answer</h2>
+                  <Sparkles className="h-4 w-4 text-black dark:text-white" />
+                  <h2 className="text-sm font-medium text-gray-700 dark:text-gray-300">Answer</h2>
                 </div>
                 {!isLoading && (
                   <div className="flex items-center gap-1 opacity-0 animate-fade-in [animation-duration:300ms] [animation-delay:200ms] [animation-fill-mode:forwards]">
                     <button
-                      onClick={() => handleCopy(messages[messages.length - 1].content || '', 'current-message')}
+                      onClick={() => handleCopy(getMessageContent(messages[messages.length - 1]), 'current-message')}
                       className="p-1.5 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 rounded-lg hover:bg-gray-100 dark:hover:bg-zinc-800 transition-colors"
                       title={copiedMessageId === 'current-message' ? "Copied!" : "Copy response"}
                     >
@@ -536,9 +555,9 @@ export function ChatInterface({ messages, sources, followUpQuestions, searchStat
                 )}
               </div>
               <div>
-                <div className="prose prose-gray max-w-none dark:prose-invert prose-p:leading-relaxed prose-pre:bg-gray-100 dark:prose-pre:bg-zinc-900">
+                <div className="prose prose-gray max-w-none dark:prose-invert prose-sm sm:prose-base prose-p:leading-relaxed prose-pre:bg-gray-100 dark:prose-pre:bg-zinc-900 break-words overflow-hidden">
                   <MarkdownRenderer 
-                    content={messages[messages.length - 1].content || ''}
+                    content={getMessageContent(messages[messages.length - 1])}
                     sources={sources}
                   />
                 </div>
@@ -550,8 +569,8 @@ export function ChatInterface({ messages, sources, followUpQuestions, searchStat
           {isLoading && messages[messages.length - 1]?.role === 'user' && (
             <div className="opacity-0 animate-fade-up [animation-duration:500ms] [animation-fill-mode:forwards]">
               <div className="flex items-center gap-2 mb-3">
-                <Sparkles className="h-4 w-4 text-orange-500" />
-                <h2 className="text-sm font-medium text-gray-600 dark:text-gray-400">Answer</h2>
+                <Sparkles className="h-4 w-4 text-black dark:text-white" />
+                <h2 className="text-sm font-medium text-gray-700 dark:text-gray-300">Answer</h2>
               </div>
               <div>
                 <div className="flex items-center gap-2 text-gray-500 dark:text-gray-400">
@@ -566,24 +585,19 @@ export function ChatInterface({ messages, sources, followUpQuestions, searchStat
           {followUpQuestions.length > 0 && !isWaitingForResponse && (
             <div className="opacity-0 animate-fade-up [animation-duration:300ms] [animation-fill-mode:forwards]">
               <div className="flex items-center gap-2 mb-3">
-                <Sparkles className="h-4 w-4 text-red-500" />
-                <h2 className="text-sm font-medium text-gray-600 dark:text-gray-400">Related</h2>
+                <Sparkles className="h-4 w-4 text-black dark:text-white" />
+                <h2 className="text-sm font-medium text-gray-700 dark:text-gray-300">Related</h2>
               </div>
               <div className="space-y-2">
                 {followUpQuestions.map((question, index) => (
                   <button
                     key={index}
                     onClick={() => handleFollowUpClick(question)}
-                    className="w-full text-left p-2 bg-white dark:bg-zinc-800 rounded-xl border border-gray-200 dark:border-gray-700 hover:border-orange-300 dark:hover:border-orange-600 transition-all duration-200 hover:shadow-md group opacity-0 animate-fade-up"
-                    style={{
-                      animationDelay: `${index * 50}ms`,
-                      animationDuration: '300ms',
-                      animationFillMode: 'forwards'
-                    }}
+                    className="w-full text-left p-2 bg-white dark:bg-zinc-800 rounded-xl border border-gray-200 dark:border-gray-700 hover:border-orange-300 dark:hover:border-orange-600 hover:shadow-md group"
                   >
                     <div className="flex items-center gap-2">
-                      <Plus className="h-4 w-4 text-gray-400 group-hover:text-orange-500 transition-colors flex-shrink-0" />
-                      <span className="text-sm text-gray-700 dark:text-gray-300 group-hover:text-orange-600 dark:group-hover:text-orange-400 transition-colors">
+                      <Plus className="h-4 w-4 text-gray-400 group-hover:text-orange-500 flex-shrink-0" />
+                      <span className="text-sm text-gray-700 dark:text-gray-300 group-hover:text-orange-600 dark:group-hover:text-orange-400">
                         {question}
                       </span>
                     </div>
@@ -599,8 +613,8 @@ export function ChatInterface({ messages, sources, followUpQuestions, searchStat
       </div>
 
       {/* Fixed input at bottom */}
-      <div className="fixed bottom-0 left-0 right-0 bg-gradient-to-t from-white via-white/95 dark:from-zinc-900 dark:via-zinc-900/95 to-transparent pt-6 pb-6 z-10">
-        <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="fixed lg:absolute bottom-0 left-0 right-0 bg-gradient-to-t from-white via-white dark:from-zinc-900 dark:via-zinc-900 to-transparent pt-4 pb-4 sm:pt-6 sm:pb-6 z-30">
+        <div className="max-w-2xl mx-auto px-3 sm:px-4 lg:px-8">
           <form onSubmit={handleFormSubmit} ref={formRef}>
             <div className="bg-white dark:bg-zinc-800 rounded-2xl shadow-xl border border-gray-200 dark:border-gray-700 p-3 focus-within:border-gray-900 dark:focus-within:border-gray-100 transition-colors">
               <div className="flex items-end gap-2">
@@ -626,19 +640,49 @@ export function ChatInterface({ messages, sources, followUpQuestions, searchStat
                 <button
                   type="submit"
                   disabled={!input.trim() || isLoading}
-                  className="bg-orange-500 hover:bg-orange-600 disabled:bg-gray-300 disabled:cursor-not-allowed text-white rounded-full h-8 w-8 min-h-[32px] min-w-[32px] flex items-center justify-center flex-shrink-0 transition-colors"
+                  className="p-0 flex items-center justify-center rounded-lg bg-[#ff4d00] hover:bg-[#e64400] disabled:bg-gray-300 disabled:cursor-not-allowed active:scale-95 group"
                 >
-                  {isLoading ? (
-                    <Loader2 className="h-4 w-4 animate-spin" />
-                  ) : (
-                    <Send className="h-4 w-4" />
-                  )}
+                  <div className="w-[48px] h-[32px] flex items-center justify-center">
+                    {isLoading ? (
+                      <Loader2 className="h-4 w-4 animate-spin text-white" />
+                    ) : (
+                      <svg 
+                        fill="none" 
+                        height="18" 
+                        viewBox="0 0 20 20" 
+                        width="18" 
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="text-white"
+                      >
+                        <path 
+                          d="M11.6667 4.79163L16.875 9.99994M16.875 9.99994L11.6667 15.2083M16.875 9.99994H3.125" 
+                          stroke="currentColor" 
+                          strokeLinecap="round" 
+                          strokeLinejoin="round" 
+                          strokeWidth="1.5"
+                        />
+                      </svg>
+                    )}
+                  </div>
                 </button>
               </div>
             </div>
           </form>
         </div>
+        
       </div>
+    </div>
+    
+    {/* Right sidebar for news and images - Hidden on mobile, shown on large screens */}
+      {(newsResults.length > 0 || imageResults.length > 0 || (isLoading && messages.length > 0)) && (
+        <div className="hidden lg:block w-80 min-w-[320px] bg-transparent overflow-y-auto p-4 space-y-6 scrollbar-hide">
+          {/* Image Results - Now at the top */}
+          <ImageResults results={imageResults} isLoading={isLoading && imageResults.length === 0} />
+          
+          {/* News Results */}
+          <NewsResults results={newsResults} isLoading={isLoading && newsResults.length === 0} />
+        </div>
+      )}
     </div>
   )
 }

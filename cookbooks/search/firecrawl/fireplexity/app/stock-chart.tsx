@@ -29,7 +29,6 @@ function isValidTicker(ticker: string): boolean {
 export function StockChart({ ticker, theme = 'light' }: StockChartProps) {
   // Validate ticker format
   if (!isValidTicker(ticker)) {
-    console.warn(`Invalid ticker format: ${ticker}`)
     // Still render the widget even if validation fails - let TradingView handle it
   }
 

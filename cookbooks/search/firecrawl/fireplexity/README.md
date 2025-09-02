@@ -1,6 +1,6 @@
 # Fireplexity v2 with Quotient Monitoring
 
-AI search engine with web, news, and images, enhanced with Quotient monitoring for hallucination detection and context relevance analysis.
+This is a fork of [Fireplexity](https://github.com/mendableai/fireplexity) enhanced with Quotient monitoring for hallucination detection and context relevance analysis. The original AI search engine capabilities (web, news, and images) are preserved while adding robust monitoring and quality checks.
 
 
 
@@ -18,7 +18,8 @@ AI search engine with web, news, and images, enhanced with Quotient monitoring f
 ## Setup
 
 ```bash
-cd fireplexity
+git clone https://github.com/quotient-ai/quotient-cookbooks.git
+cd quotient-cookbooks/cookbooks/search/firecrawl/fireplexity
 npm install
 ```
 
@@ -45,7 +46,7 @@ Open http://localhost:3000
 
 ## Deploy
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/mendableai/fireplexity)
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/quotient-ai/quotient-cookbooks/tree/main/cookbooks/search/firecrawl/fireplexity)
 
 ## Get API Keys
 

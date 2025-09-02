@@ -13,7 +13,7 @@ AI search engine with web, news, and images, enhanced with Quotient monitoring f
 
 <img src="quotientLog.png" width="100%" alt="Quotient Log" />
 
-<img src="quotientDashboard.png" width="100%" alt="Quotient Dashboard" />
+<img src="quotientDetections.png" width="100%" alt="Quotient Detections" />
 
 ## Setup
 

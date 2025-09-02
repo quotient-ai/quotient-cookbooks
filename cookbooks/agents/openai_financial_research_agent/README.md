@@ -21,7 +21,7 @@ The system uses a hierarchical approach with specialized agents:
 1. Install the dependencies:
 
 ```
-pip install quotientai openai-agents openinference-instrumentation-openai-agents
+pip install quotientai openai-agents==0.2.10 openai==1.102.0 openinference-instrumentation-openai-agents
 ```
 
 2. Set up your API Keys:

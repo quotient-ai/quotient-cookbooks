@@ -1,0 +1,410 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 240 10% 3.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 240 10% 3.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 240 10% 3.9%;
+    --primary: 240 5.9% 10%;
+    --primary-foreground: 0 0% 98%;
+    --secondary: 240 4.8% 95.9%;
+    --secondary-foreground: 240 5.9% 10%;
+    --muted: 240 4.8% 95.9%;
+    --muted-foreground: 240 3.8% 46.1%;
+    --accent: 240 4.8% 95.9%;
+    --accent-foreground: 240 5.9% 10%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 240 5.9% 90%;
+    --input: 240 5.9% 90%;
+    --ring: 240 10% 3.9%;
+    --radius: 0.5rem;
+    --chart-1: 12 76% 61%;
+    --chart-2: 173 58% 39%;
+    --chart-3: 197 37% 24%;
+    --chart-4: 43 74% 66%;
+    --chart-5: 27 87% 67%;
+  }
+
+  .dark {
+    --background: 240 10% 3.9%;
+    --foreground: 0 0% 98%;
+    --card: 240 10% 3.9%;
+    --card-foreground: 0 0% 98%;
+    --popover: 240 10% 3.9%;
+    --popover-foreground: 0 0% 98%;
+    --primary: 0 0% 98%;
+    --primary-foreground: 240 5.9% 10%;
+    --secondary: 240 3.7% 15.9%;
+    --secondary-foreground: 0 0% 98%;
+    --muted: 240 3.7% 15.9%;
+    --muted-foreground: 240 5% 64.9%;
+    --accent: 240 3.7% 15.9%;
+    --accent-foreground: 0 0% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 240 3.7% 15.9%;
+    --input: 240 3.7% 15.9%;
+    --ring: 240 4.9% 83.9%;
+    --chart-1: 220 70% 50%;
+    --chart-2: 160 60% 45%;
+    --chart-3: 30 80% 55%;
+    --chart-4: 280 65% 60%;
+    --chart-5: 340 75% 55%;
+  }
+}
+
+@layer base {
+  * {
+    border-color: hsl(var(--border));
+  }
+  body {
+    background-color: hsl(var(--background));
+    color: hsl(var(--foreground));
+  }
+  
+  /* Fix for Tailwind animations disappearing */
+  [class*="animate-"] {
+    animation-fill-mode: both;
+  }
+}
+
+/* Custom animation utilities */
+@layer utilities {
+  /* CSS Variables for animation */
+  :root {
+    /* Durations */
+    --d-1: 150ms;
+    --d-2: 300ms;
+    --d-3: 500ms;
+    --d-4: 700ms;
+    --d-5: 1000ms;
+    
+    /* Timings (delays) */
+    --t-1: 100ms;
+    --t-2: 200ms;
+    --t-3: 300ms;
+    --t-4: 400ms;
+    --t-5: 500ms;
+  }
+
+  /* Fade up animation */
+  @keyframes fade-up {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .animate-fade-up {
+    animation: fade-up 500ms ease-out forwards;
+  }
+
+  /* Fade in animation */
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  .animate-fade-in {
+    animation: fade-in 500ms ease-out forwards;
+  }
+
+  /* Slide in from right */
+  @keyframes slide-in-right {
+    from {
+      opacity: 0;
+      transform: translateX(100px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  .animate-slide-in-right {
+    animation: slide-in-right 500ms ease-out forwards;
+  }
+
+  /* Scale in content animation */
+  @keyframes scale-in-content {
+    from {
+      opacity: 0;
+      transform: scale(0.95);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  .animate-scale-in-content {
+    animation: scale-in-content 500ms ease-out forwards;
+  }
+
+  /* Slide up animation */
+  @keyframes slide-up {
+    from {
+      opacity: 0;
+      transform: translateY(40px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .animate-slide-up {
+    animation: slide-up 700ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+
+  /* Number transition effect */
+  .number-transition {
+    transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  /* Scanning animations */
+  @keyframes scan {
+    from {
+      top: 0%;
+    }
+    to {
+      top: 100%;
+    }
+  }
+
+  .animate-scan {
+    animation: scan 3s linear infinite;
+  }
+
+  /* Scanner effect for screenshot scanning */
+  @keyframes scanner {
+    0% {
+      top: 0;
+    }
+    100% {
+      top: 100%;
+    }
+  }
+
+  .scanner-line {
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(
+      to bottom,
+      transparent,
+      rgba(251, 146, 60, 0.8),
+      transparent
+    );
+    box-shadow: 0 0 10px rgba(251, 146, 60, 0.8);
+    animation: scanner 2s linear infinite;
+  }
+
+  .scanner-line::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 20px;
+    background: linear-gradient(
+      to bottom,
+      transparent,
+      rgba(251, 146, 60, 0.1),
+      transparent
+    );
+    top: -10px;
+  }
+
+  /* Synchronized scrolling for long screenshots */
+  @keyframes screenshot-scroll {
+    0% {
+      transform: translateY(0);
+    }
+    100% {
+      transform: translateY(calc(-100% + 100vh));
+    }
+  }
+
+  .screenshot-scroll-container {
+    will-change: transform;
+  }
+
+  /* Apply animation only when marked as tall */
+  .animate-screenshot-scroll {
+    animation: screenshot-scroll 4s linear infinite;
+  }
+  
+  /* Scanner moves fast at 2s, screenshot scrolls very slowly at 20s */
+  .scanner-line {
+    animation-duration: 2s;
+  }
+  
+  .animate-screenshot-scroll {
+    animation-duration: 40s; /* 20x slower than scanner - very slow scrolling */
+  }
+
+  /* Animated cursor styles */
+  @keyframes cursor-click {
+    0% { transform: scale(1); }
+    50% { transform: scale(0.8); }
+    100% { transform: scale(1); }
+  }
+
+  /* Selection pulse animation */
+  @keyframes selection-pulse {
+    0%, 100% {
+      border-color: rgba(251, 146, 60, 1);
+      box-shadow: 0 0 0 0 rgba(251, 146, 60, 0.4);
+    }
+    50% {
+      border-color: rgba(251, 146, 60, 0.7);
+      box-shadow: 0 0 0 8px rgba(251, 146, 60, 0);
+    }
+  }
+
+  .animate-selection-pulse {
+    animation: selection-pulse 1.5s ease-in-out infinite;
+  }
+
+  /* Green selection pulse animation */
+  @keyframes selection-pulse-green {
+    0%, 100% {
+      border-color: rgba(34, 197, 94, 1);
+      box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.4);
+      background-color: rgba(34, 197, 94, 0.05);
+    }
+    50% {
+      border-color: rgba(34, 197, 94, 0.7);
+      box-shadow: 0 0 0 6px rgba(34, 197, 94, 0);
+      background-color: rgba(34, 197, 94, 0.1);
+    }
+  }
+
+  .animate-selection-pulse-green {
+    animation: selection-pulse-green 1.5s ease-in-out infinite;
+  }
+
+  /* Button press animation */
+  @keyframes button-press {
+    0% { transform: scale(1); }
+    50% { transform: scale(0.8); background-color: rgb(220 38 38); }
+    100% { transform: scale(1); background-color: rgb(239 68 68); }
+  }
+
+  .animate-button-press {
+    animation: button-press 0.3s ease-out;
+    animation-delay: 1.5s; /* Wait for cursor to reach button */
+  }
+
+  @keyframes scan-vertical {
+    0% {
+      transform: translateY(-100%);
+    }
+    50% {
+      transform: translateY(100%);
+    }
+    100% {
+      transform: translateY(-100%);
+    }
+  }
+
+  .animate-scan-vertical {
+    animation: scan-vertical 4s ease-in-out infinite;
+  }
+
+  @keyframes scan-horizontal {
+    0% {
+      transform: translateX(-100%);
+    }
+    50% {
+      transform: translateX(100%);
+    }
+    100% {
+      transform: translateX(-100%);
+    }
+  }
+
+  .animate-scan-horizontal {
+    animation: scan-horizontal 3s ease-in-out infinite;
+  }
+
+  /* Pulse animation for grid */
+  @keyframes grid-pulse {
+    0%, 100% {
+      opacity: 0.1;
+    }
+    50% {
+      opacity: 0.3;
+    }
+  }
+
+  .animate-grid-pulse {
+    animation: grid-pulse 2s ease-in-out infinite;
+  }
+}
+
+/* Custom scrollbar styles */
+@layer components {
+  .custom-scrollbar {
+    scrollbar-width: thin;
+    scrollbar-color: #d1d5db #f3f4f6;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background: #f3f4f6;
+    border-radius: 4px;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background: #d1d5db;
+    border-radius: 4px;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: #9ca3af;
+  }
+
+  .dark .custom-scrollbar {
+    scrollbar-color: #4b5563 #1f2937;
+  }
+
+  .dark .custom-scrollbar::-webkit-scrollbar-track {
+    background: #1f2937;
+  }
+
+  .dark .custom-scrollbar::-webkit-scrollbar-thumb {
+    background: #4b5563;
+  }
+
+  .dark .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: #6b7280;
+  }
+  
+  /* Hide scrollbar utility */
+  .scrollbar-hide {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+  }
+  
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;  /* Chrome, Safari and Opera */
+  }
+}

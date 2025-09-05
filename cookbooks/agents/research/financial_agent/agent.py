@@ -3,8 +3,8 @@ Financial AI Agent with Quotient Traces
 
 This examples showcases a production-ready financial analysis agent that demonstrates:
 - Real-time stock data retrieval and analysis
-- Hallucination detection using Quotient AI
 - Comprehensive tracing and monitoring
+- Hallucination detection and document relevance analysis using Quotient AI
 - Error handling and logging
 
 Do install the necessary libraries before running the file.

@@ -2,8 +2,10 @@ from __future__ import annotations
 
 import asyncio
 from collections.abc import Sequence
+from pathlib import Path
 
 from rich.console import Console
+from dotenv import load_dotenv
 
 from agents import Runner, RunResult
 
@@ -18,6 +20,10 @@ from .printer import Printer
 from openinference.instrumentation.openai_agents import OpenAIAgentsInstrumentor
 
 from quotientai import QuotientAI
+
+# Force load .env from project root (4 levels up from this file)
+# override=True ensures .env values take precedence over existing environment variables
+load_dotenv(override=True)
 
 quotient = QuotientAI()
 quotient.tracer.init(

@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 import asyncio
-import time
 from collections.abc import Sequence
 
 from rich.console import Console
@@ -43,7 +42,6 @@ class FinancialResearchManager:
         self.console = Console()
         self.printer = Printer(self.console)
 
-    @quotient.trace("financial-research-agent-runner")
     async def run(self, query: str) -> None:
         self.printer.update_item("start", "Starting financial research...", is_done=True)
         search_plan = await self._plan_searches(query)
@@ -98,6 +96,7 @@ class FinancialResearchManager:
         except Exception:
             return None
 
+    @quotient.trace("write-report")
     async def _write_report(self, query: str, search_results: Sequence[str]) -> FinancialReportData:
         # Expose the specialist analysts as tools so the writer can invoke them inline
         # and still produce the final FinancialReportData output.
@@ -112,21 +111,9 @@ class FinancialResearchManager:
             custom_output_extractor=_summary_extractor,
         )
         writer_with_tools = writer_agent.clone(tools=[fundamentals_tool, risk_tool])
-        self.printer.update_item("writing", "Thinking about report...")
+        self.printer.update_item("writing", "Writing report...")
         input_data = f"Original query: {query}\nSummarized search results: {search_results}"
-        result = Runner.run_streamed(writer_with_tools, input_data)
-        update_messages = [
-            "Planning report structure...",
-            "Writing sections...",
-            "Finalizing report...",
-        ]
-        last_update = time.time()
-        next_message = 0
-        async for _ in result.stream_events():
-            if time.time() - last_update > 5 and next_message < len(update_messages):
-                self.printer.update_item("writing", update_messages[next_message])
-                next_message += 1
-                last_update = time.time()
+        result = await Runner.run(writer_with_tools, input_data)
         self.printer.mark_item_done("writing")
         return result.final_output_as(FinancialReportData)
 

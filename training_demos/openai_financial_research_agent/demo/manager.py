@@ -21,9 +21,11 @@ from openinference.instrumentation.openai_agents import OpenAIAgentsInstrumentor
 
 from quotientai import QuotientAI
 
-# Force load .env from project root (4 levels up from this file)
-# override=True ensures .env values take precedence over existing environment variables
-load_dotenv(override=True)
+# Load .env file from training_demos folder
+path = Path(__file__).parent.parent.parent / '.env' 
+loaded = load_dotenv(path, override=True)
+if not loaded:
+    raise FileNotFoundError(f"Could not load {path} - does it exist?")
 
 quotient = QuotientAI()
 quotient.tracer.init(

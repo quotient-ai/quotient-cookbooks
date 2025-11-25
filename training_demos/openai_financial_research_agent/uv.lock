@@ -550,7 +550,7 @@ wheels = [
 
 [[package]]
 name = "mcp"
-version = "1.21.2"
+version = "1.22.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "anyio" },
@@ -568,9 +568,9 @@ dependencies = [
     { name = "typing-inspection" },
     { name = "uvicorn", marker = "sys_platform != 'emscripten'" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/15/bb/147bf5d47b8d6f3fb315204cd2f567b1ad85511acd8d59e85cccf7cce65c/mcp-1.21.2.tar.gz", hash = "sha256:b6497b7f7a77aabe263931a3335956dfd45fe8b1e2168931e455914ba1a7f4c9", size = 470799, upload-time = "2025-11-17T13:56:06.397Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/a3/a2/c5ec0ab38b35ade2ae49a90fada718fbc76811dc5aa1760414c6aaa6b08a/mcp-1.22.0.tar.gz", hash = "sha256:769b9ac90ed42134375b19e777a2858ca300f95f2e800982b3e2be62dfc0ba01", size = 471788, upload-time = "2025-11-20T20:11:28.095Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/67/0f/669ecbe78a0ba192afcc0b026ae62d1005779e91bad27ab9d703401510bf/mcp-1.21.2-py3-none-any.whl", hash = "sha256:59413ef15db757a785e3859548c1a7ffc7be57bf162c3c24afc0e04fd9f4181c", size = 174854, upload-time = "2025-11-17T13:56:04.987Z" },
+    { url = "https://files.pythonhosted.org/packages/a9/bb/711099f9c6bb52770f56e56401cdfb10da5b67029f701e0df29362df4c8e/mcp-1.22.0-py3-none-any.whl", hash = "sha256:bed758e24df1ed6846989c909ba4e3df339a27b4f30f1b8b627862a4bade4e98", size = 175489, upload-time = "2025-11-20T20:11:26.542Z" },
 ]
 
 [[package]]
@@ -584,7 +584,7 @@ wheels = [
 
 [[package]]
 name = "openai"
-version = "1.102.0"
+version = "2.8.1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "anyio" },
@@ -596,14 +596,14 @@ dependencies = [
     { name = "tqdm" },
     { name = "typing-extensions" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/07/55/da5598ed5c6bdd9939633854049cddc5cbac0da938dfcfcb3c6b119c16c0/openai-1.102.0.tar.gz", hash = "sha256:2e0153bcd64a6523071e90211cbfca1f2bbc5ceedd0993ba932a5869f93b7fc9", size = 519027, upload-time = "2025-08-26T20:50:29.397Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/d5/e4/42591e356f1d53c568418dc7e30dcda7be31dd5a4d570bca22acb0525862/openai-2.8.1.tar.gz", hash = "sha256:cb1b79eef6e809f6da326a7ef6038719e35aa944c42d081807bfa1be8060f15f", size = 602490, upload-time = "2025-11-17T22:39:59.549Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/bd/0d/c9e7016d82c53c5b5e23e2bad36daebb8921ed44f69c0a985c6529a35106/openai-1.102.0-py3-none-any.whl", hash = "sha256:d751a7e95e222b5325306362ad02a7aa96e1fab3ed05b5888ce1c7ca63451345", size = 812015, upload-time = "2025-08-26T20:50:27.219Z" },
+    { url = "https://files.pythonhosted.org/packages/55/4f/dbc0c124c40cb390508a82770fb9f6e3ed162560181a85089191a851c59a/openai-2.8.1-py3-none-any.whl", hash = "sha256:c6c3b5a04994734386e8dad3c00a393f56d3b68a27cd2e8acae91a59e4122463", size = 1022688, upload-time = "2025-11-17T22:39:57.675Z" },
 ]
 
 [[package]]
 name = "openai-agents"
-version = "0.2.10"
+version = "0.5.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "griffe" },
@@ -614,9 +614,34 @@ dependencies = [
     { name = "types-requests" },
     { name = "typing-extensions" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/2f/8e/99a7ad15bdd48610d2e738aecdcba9bdcca7b60b4a4f8006577e76f651b6/openai_agents-0.2.10.tar.gz", hash = "sha256:8741890b5b5f1513589aebc571776b9a17158a01f6df55ab6402668d2a204a4d", size = 1671208, upload-time = "2025-08-29T14:08:32.274Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/00/b3/c25c3b3084c113ffbd161c37ed7c02e0cc1296eb2f2d582d85c461f60c7a/openai_agents-0.5.0.tar.gz", hash = "sha256:776dde4025442164e3e860ff5b239b5c0ebc30f9445b0d75295c385a8ca1f696", size = 1958702, upload-time = "2025-11-05T05:28:37.456Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/bb/1d/95930498ea971834f808242fb00a5574796c29adf93afb8444a6ec970a73/openai_agents-0.2.10-py3-none-any.whl", hash = "sha256:70618881d190265beefb5dac5ffd7bb99e2bed5907440e468ce03257d8994bf5", size = 178904, upload-time = "2025-08-29T14:08:30.796Z" },
+    { url = "https://files.pythonhosted.org/packages/d5/f5/c43a84a64aa3328c628cc19365dc514ce02abf31e31c861ad489d6d3075b/openai_agents-0.5.0-py3-none-any.whl", hash = "sha256:5ef062273815de197315ec760f571625d0f2766ceb83ab189ba6cdd9b26a10e9", size = 223272, upload-time = "2025-11-05T05:28:35.64Z" },
+]
+
+[[package]]
+name = "openai-financial-research-agent"
+version = "0.1.0"
+source = { virtual = "." }
+dependencies = [
+    { name = "openai" },
+    { name = "openai-agents" },
+    { name = "openinference-instrumentation-openai-agents" },
+    { name = "pydantic" },
+    { name = "python-dotenv" },
+    { name = "quotientai" },
+    { name = "rich" },
+]
+
+[package.metadata]
+requires-dist = [
+    { name = "openai", specifier = "==2.8.1" },
+    { name = "openai-agents", specifier = "==0.5.0" },
+    { name = "openinference-instrumentation-openai-agents", specifier = ">=1.3.1" },
+    { name = "pydantic", specifier = ">=2.12.4" },
+    { name = "python-dotenv", specifier = ">=1.2.1" },
+    { name = "quotientai", specifier = ">=0.4.17" },
+    { name = "rich", specifier = ">=13.7.0,<14.0.0" },
 ]
 
 [[package]]
@@ -1006,25 +1031,6 @@ wheels = [
     { url = "https://files.pythonhosted.org/packages/c9/31/097f2e132c4f16d99a22bfb777e0fd88bd8e1c634304e102f313af69ace5/pywin32-311-cp314-cp314-win32.whl", hash = "sha256:b7a2c10b93f8986666d0c803ee19b5990885872a7de910fc460f9b0c2fbf92ee", size = 8840714, upload-time = "2025-07-14T20:13:32.449Z" },
     { url = "https://files.pythonhosted.org/packages/90/4b/07c77d8ba0e01349358082713400435347df8426208171ce297da32c313d/pywin32-311-cp314-cp314-win_amd64.whl", hash = "sha256:3aca44c046bd2ed8c90de9cb8427f581c479e594e99b5c0bb19b29c10fd6cb87", size = 9656800, upload-time = "2025-07-14T20:13:34.312Z" },
     { url = "https://files.pythonhosted.org/packages/c0/d2/21af5c535501a7233e734b8af901574572da66fcc254cb35d0609c9080dd/pywin32-311-cp314-cp314-win_arm64.whl", hash = "sha256:a508e2d9025764a8270f93111a970e1d0fbfc33f4153b388bb649b7eec4f9b42", size = 8932540, upload-time = "2025-07-14T20:13:36.379Z" },
-]
-
-[[package]]
-name = "quotient-cookbooks"
-version = "0.1.0"
-source = { virtual = "." }
-dependencies = [
-    { name = "openai" },
-    { name = "openai-agents" },
-    { name = "openinference-instrumentation-openai-agents" },
-    { name = "quotientai" },
-]
-
-[package.metadata]
-requires-dist = [
-    { name = "openai", specifier = "==1.102.0" },
-    { name = "openai-agents", specifier = "==0.2.10" },
-    { name = "openinference-instrumentation-openai-agents", specifier = ">=1.3.1" },
-    { name = "quotientai", specifier = ">=0.4.17" },
 ]
 
 [[package]]

@@ -1,14 +1,29 @@
+#!/usr/bin/env python3
+"""
+Script to generate financial research questions for training.
+
+Usage:
+    uv run python scripts/prompt_generation.py
+    or
+    python scripts/prompt_generation.py
+"""
 import asyncio
 import random
 import textwrap
+from pathlib import Path
 
 from dotenv import load_dotenv
 
 from agents import Agent, AgentOutputSchema, Runner
 from openai import BaseModel
 
-load_dotenv(override=True)
+# Load .env file from project root (two levels up from scripts/)
+env_path = Path(__file__).parent.parent.parent / ".env"
+loaded = load_dotenv(env_path, override=True)
+if not loaded:
+    raise FileNotFoundError(f"Could not load {env_path} - does it exist?")
 
+NUM_WORKERS = 50
 # ------------------------------------------
 # Axis Definitions with One-Sentence Descriptions
 # ------------------------------------------
@@ -140,7 +155,20 @@ async def generate_questions():
         return None
 
 async def main():
-    semaphore = asyncio.Semaphore(10)
+    # Determine the output file path (data/questions.txt relative to the project root)
+    output_file = Path(__file__).parent.parent / "data" / "questions.txt"
+    
+    # Check if file already exists and ask for confirmation
+    if output_file.exists():
+        response = input(f"File {output_file} already exists. Do you want to replace it? (yes/no): ")
+        if response.lower() not in ['yes', 'y']:
+            print("Cancelled. Exiting without generating questions.")
+            return
+    
+    # Ensure the data directory exists
+    output_file.parent.mkdir(parents=True, exist_ok=True)
+    
+    semaphore = asyncio.Semaphore(NUM_WORKERS)
     total_questions = 0
     
     async def generate_with_semaphore():
@@ -149,7 +177,7 @@ async def main():
     
     tasks = [generate_with_semaphore() for _ in range(240)]
     
-    with open("questions.txt", "w") as f:
+    with open(output_file, "w") as f:
         for coro in asyncio.as_completed(tasks):
             question_result = await coro
             if question_result is not None:
@@ -163,5 +191,4 @@ async def main():
     print(f"Successfully generated {total_questions} questions")
 
 if __name__ == "__main__":
-    # python -m cookbooks.agents.openai_financial_research_agent.scripts.prompt_generation
     asyncio.run(main())

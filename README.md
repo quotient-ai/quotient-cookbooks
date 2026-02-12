@@ -28,7 +28,12 @@
 
 This repository contains cookbooks and examples demonstrating how to monitor and evaluate AI systems for hallucinations, retrieval quality, and other reliability issues using [Quotient AI](https://www.quotientai.co/).
 
+
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fquotient-ai%2Fquotient-cookbooks.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2Fquotient-ai%2Fquotient-cookbooks?ref=badge_large)
+
 ## What You Can Do
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fquotient-ai%2Fquotient-cookbooks.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2Fquotient-ai%2Fquotient-cookbooks?ref=badge_shield)
+
 
 - **Build and Monitor AI Agents**: Track LangChain agents in real-time
 - **Evaluate Search Quality**: Automatically detect when AI search results contain unsupported claims

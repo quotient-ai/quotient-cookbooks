@@ -5,8 +5,23 @@ description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
+    "datasets>=4.5.0",
+    "exa-py>=2.4.0",
+    "langchain>=0.3.27",
+    "langchain-openai>=0.3.32",
+    "langchain-qdrant>=0.2.1",
+    "linkup-sdk>=0.10.0",
+    "matplotlib>=3.10.8",
+    "numpy>=2.4.2",
     "openai==1.102.0",
     "openai-agents==0.2.10",
     "openinference-instrumentation-openai-agents>=1.4.0",
+    "pandas>=3.0.0",
+    "qdrant-client>=1.16.2",
     "quotientai>=0.4.17",
+    "requests>=2.32.5",
+    "seaborn>=0.13.2",
+    "tavily-python>=0.7.21",
+    "together>=2.1.1",
+    "tqdm>=4.67.1",
 ]
